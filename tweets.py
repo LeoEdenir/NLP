@@ -36,3 +36,24 @@ def tratarTweets(listaTweets, stopwords=stopwords):
 
 def retornarTweetsTratados():
     return tratarTweets(retornaTweets())
+
+
+# fazer a filtragem de tweets com termos específicos
+def definir_termos_especificos(listaTweets=tratarTweets(retornaTweets())):
+    lista_nova = []
+    lista_termos = []
+
+    i = 's'
+    while i != 'n':
+        termo = input("Adicionar termo para verificação: ")
+        lista_termos.append(termo)
+        i = input("Quer adicionar outro termo? (s/n) ")
+
+    for tweet in listaTweets:
+        palavras = word_tokenize(tweet[0].lower())
+        palavras = [palavra for palavra in palavras if palavra in lista_termos]
+
+        if len(palavras) > 0:
+            lista_nova.append((' '.join(palavras), tweet[1]))
+
+    return lista_nova
