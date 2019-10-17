@@ -12,7 +12,7 @@ def retornaBanco():
     return cursor.fetchall()
 
 
-def retornaPostLimpo(postagens=retornaBanco()):
+def retornaPostEgressosLimpo(postagens=retornaBanco()):
     lista_postagens = []
 
     for post in postagens:

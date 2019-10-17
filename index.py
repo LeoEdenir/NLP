@@ -2,7 +2,8 @@ import random
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.naive_bayes import BernoulliNB
 from tweets import retornarTweetsTratados
-from bancoEgressos import retornaPostLimpo
+from bancoEgressos import retornaPostEgressosLimpo
+import json
 
 
 def dividir_dados_para_treino_e_validacao(dados):
@@ -48,15 +49,11 @@ def realizar_treinamento(registros_de_treino, vetorizador):
 def exibir_resultado(valor):
     frase, resultado = valor
     resultado = "Frase positiva" if resultado[0] == 1 else "Frase negativa"
-    print(frase + ": ", resultado)
-    f = open("teste.txt", "w")
 
-    f.write(frase + ': ' + resultado + '\n')
+    print(frase + ': ' + resultado)
 
 
 def analisar_frase(classificador, vetorizador, frase):
-    # print(classificador.predict(vetorizador.transform([frase])))
-    # exit()
     return frase, classificador.predict(vetorizador.transform([frase]))
 
 
@@ -64,10 +61,12 @@ registros_de_treino, registros_para_avaliacao = pre_processamento()
 vetorizador = CountVectorizer(binary='true')
 classificador = realizar_treinamento(registros_de_treino, vetorizador)
 
-for post in retornaPostLimpo():
+
+for post in retornaPostEgressosLimpo():
     exibir_resultado(analisar_frase(classificador, vetorizador, post[0]))
 
 
+# avaliação de aplicação
 def realizar_avaliacao_simples(registros_para_avaliacao):
     avaliacao_comentarios = [registro_avaliacao[0] for registro_avaliacao in registros_para_avaliacao]
     avaliacao_respostas   = [registro_avaliacao[1] for registro_avaliacao in registros_para_avaliacao]
