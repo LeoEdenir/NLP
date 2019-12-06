@@ -4,7 +4,7 @@ import re
 
 
 def retornaBanco():
-    db = pymysql.connect(host="localhost", user="root", password="root", db="egressos_teste")
+    db = pymysql.connect(host="localhost", user="root", password="root", db="egressos")
     cursor = db.cursor()
 
     cursor.execute("SELECT titulo, descricao, id_post FROM post")
